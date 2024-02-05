@@ -1,4 +1,10 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { app } from "firebaseApp";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -51,6 +57,26 @@ export default function LoginForm() {
     }
   };
 
+  const snsLoginHandler = async (e: any) => {
+    const { name } = e.target;
+
+    const auth = getAuth(app);
+    let provider;
+    if (name === "google") provider = new GoogleAuthProvider();
+    if (name === "github") provider = new GithubAuthProvider();
+
+    try {
+      await signInWithPopup(
+        auth,
+        provider as GoogleAuthProvider | GithubAuthProvider
+      );
+      toast.success("로그인 되었습니다.");
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error?.message);
+    }
+  };
+
   return (
     <form onSubmit={onSubmit} className="form form--lg">
       <div className="form__title">로그인</div>
@@ -94,6 +120,26 @@ export default function LoginForm() {
           disabled={error?.length > 0}
         >
           로그인
+        </button>
+      </div>
+      <div className="form__block">
+        <button
+          type="button"
+          name="google"
+          className="form__btn-google"
+          onClick={snsLoginHandler}
+        >
+          Google로 로그인
+        </button>
+      </div>
+      <div className="form__block">
+        <button
+          type="button"
+          name="github"
+          className="form__btn-github"
+          onClick={snsLoginHandler}
+        >
+          Github로 로그인
         </button>
       </div>
     </form>
