@@ -4,6 +4,9 @@ import { MdLogout, MdLogin } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "context/AuthContext";
+import { getAuth, signOut } from "firebase/auth";
+import { app } from "firebaseApp";
+import { toast } from "react-toastify";
 
 export default function Menu() {
   const navigate = useNavigate();
@@ -43,8 +46,10 @@ export default function Menu() {
         ) : (
           <button
             type="button"
-            onClick={() => {
-              navigate("/");
+            onClick={async () => {
+              const auth = getAuth(app);
+              await signOut(auth);
+              toast.success("로그아웃 되었습니다.");
             }}
           >
             <MdLogout />

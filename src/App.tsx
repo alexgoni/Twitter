@@ -23,7 +23,12 @@ function App() {
 
   return (
     <Layout>
-      <ToastContainer />
+      <ToastContainer
+        theme="dark"
+        autoClose={500}
+        hideProgressBar
+        newestOnTop
+      />
       {init ? <Router isAuthenticated={isAuthenticated} /> : <Loading />}
     </Layout>
   );
