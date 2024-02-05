@@ -332,6 +332,16 @@ table {
       }
     }
   }
+  &__no-posts {
+    padding: 16px;
+    span {
+      font-size: 14px;
+      border: 1px solid $gray;
+      padding: 16px;
+      display: block;
+      border-radius: 4px;
+    }
+  }
 }
 
 /* menu */

@@ -1,5 +1,8 @@
 import PostForm from "components/posts/PostForm";
 import PostBox from "components/posts/PostBox";
+import { useEffect, useState } from "react";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { db } from "firebaseApp";
 
 export interface PostProps {
   id: string;
@@ -13,59 +16,22 @@ export interface PostProps {
   comments?: any;
 }
 
-const posts: PostProps[] = [
-  {
-    id: "1",
-    email: "goni000211@gmail.com",
-    content: "내용입니다",
-    createdAt: "2023-08-30",
-    uid: "123123",
-  },
-  {
-    id: "2",
-    email: "goni000211@gmail.com",
-    content: "내용입니다",
-    createdAt: "2023-08-30",
-    uid: "123123",
-  },
-  {
-    id: "3",
-    email: "goni000211@gmail.com",
-    content: "내용입니다",
-    createdAt: "2023-08-30",
-    uid: "123123",
-  },
-  {
-    id: "4",
-    email: "goni000211@gmail.com",
-    content: "내용입니다",
-    createdAt: "2023-08-30",
-    uid: "123123",
-  },
-  {
-    id: "5",
-    email: "goni000211@gmail.com",
-    content: "내용입니다",
-    createdAt: "2023-08-30",
-    uid: "123123",
-  },
-  {
-    id: "6",
-    email: "goni000211@gmail.com",
-    content: "내용입니다",
-    createdAt: "2023-08-30",
-    uid: "123123",
-  },
-  {
-    id: "7",
-    email: "goni000211@gmail.com",
-    content: "내용입니다",
-    createdAt: "2023-08-30",
-    uid: "123123",
-  },
-];
-
 export default function Home() {
+  const [posts, setPosts] = useState<PostProps[]>([]);
+
+  useEffect(() => {
+    let postsRef = collection(db, "posts");
+    let postsQuery = query(postsRef, orderBy("createdAt", "desc"));
+
+    onSnapshot(postsQuery, (snapShot) => {
+      let dataObj = snapShot.docs.map((doc) => ({
+        id: doc?.id,
+        ...doc.data(),
+      }));
+      setPosts(dataObj as PostProps[]);
+    });
+  }, []);
+
   return (
     <div className="home">
       <div className="home__top">
@@ -77,9 +43,13 @@ export default function Home() {
       </div>
       <PostForm />
       <div className="post">
-        {posts?.map((post) => (
-          <PostBox post={post} key={post.id} />
-        ))}
+        {posts?.length > 0 ? (
+          posts?.map((post) => <PostBox post={post} key={post.id} />)
+        ) : (
+          <div className="post__no-posts">
+            <span>게시글이 없습니다.</span>
+          </div>
+        )}
       </div>
     </div>
   );
