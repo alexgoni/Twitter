@@ -264,6 +264,13 @@ table {
 /* post list */
 
 .post {
+  &__header {
+    button {
+      border: none;
+      padding: 16px;
+      cursor: pointer;
+    }
+  }
   padding-bottom: 40px;
   .post__box {
     padding: 10px 0;
