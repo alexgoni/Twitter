@@ -1,4 +1,5 @@
 import { FirebaseApp, getApp, initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -10,7 +11,6 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_ID,
 };
 
-// Initialize Firebase
 let app: FirebaseApp;
 try {
   app = getApp("app");
@@ -18,4 +18,6 @@ try {
   app = initializeApp(firebaseConfig, "app");
 }
 
-export { app };
+const db = getFirestore(app);
+
+export { app, db };

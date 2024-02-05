@@ -42,18 +42,40 @@ const posts: PostProps[] = [
     createdAt: "2023-08-30",
     uid: "123123",
   },
+  {
+    id: "5",
+    email: "goni000211@gmail.com",
+    content: "내용입니다",
+    createdAt: "2023-08-30",
+    uid: "123123",
+  },
+  {
+    id: "6",
+    email: "goni000211@gmail.com",
+    content: "내용입니다",
+    createdAt: "2023-08-30",
+    uid: "123123",
+  },
+  {
+    id: "7",
+    email: "goni000211@gmail.com",
+    content: "내용입니다",
+    createdAt: "2023-08-30",
+    uid: "123123",
+  },
 ];
 
 export default function Home() {
   return (
     <div className="home">
-      <div className="home__title">Home</div>
-      <div className="home__tabs">
-        <div className="home__tab home__tab--active">For You</div>
-        <div className="home__tab">Following</div>
+      <div className="home__top">
+        <div className="home__title">Home</div>
+        <div className="home__tabs">
+          <div className="home__tab home__tab--active">For You</div>
+          <div className="home__tab">Following</div>
+        </div>
       </div>
       <PostForm />
-      {/* Tweet posts */}
       <div className="post">
         {posts?.map((post) => (
           <PostBox post={post} key={post.id} />
