@@ -16,13 +16,13 @@ export default function PostForm() {
   };
 
   const handleKeyUp = (e: any) => {
-    if (e.keyCode === 32 && e.target.value.trim() !== "") {
-      if (tags?.includes(e.target.value.trim())) {
-        toast.error("같은 태그가 있습니다.");
-      } else {
-        setTags((prev) => (prev?.length > 0 ? [...prev, hashTag] : [hashTag]));
-        setHashTag("");
-      }
+    if (e.keyCode !== 32 || e.target.value.trim() === "") return;
+
+    if (tags?.includes(e.target.value.trim())) {
+      toast.error("같은 태그가 있습니다.");
+    } else {
+      setTags((prev) => (prev?.length > 0 ? [...prev, hashTag] : [hashTag]));
+      setHashTag("");
     }
   };
 
