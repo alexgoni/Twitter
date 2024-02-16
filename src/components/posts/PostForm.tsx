@@ -87,13 +87,12 @@ export default function PostForm() {
       setHashTag("");
       setContent("");
       setImageFile(null);
+      setIsSubmitting(false);
       toast.success("게시글을 생성했습니다.");
     } catch (error: any) {
       console.log(error);
       toast.error(error.code);
     }
-
-    setIsSubmitting(false);
   };
 
   return (
